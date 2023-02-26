@@ -1,0 +1,107 @@
+{{#if news}}
+  <div class='card align-items-center'>
+    <div class='card-body'>
+      <h2 class='text-uppercase'>{{news.title}}</h2>
+      <h6 class='card-subtitle mb-2 text-muted'>
+       Автор: {{news.user.firstName}} {{news.user.lastName}}
+      </h6>
+      <h6 class='card-subtitle text-muted mb-3'>
+        Дата создания:
+        {{dateLocal news.createdAt}}
+      </h6>
+      <img
+        class='img-fluid rounded'
+        style='max-height:450px'
+        src='http://localhost:3000{{news.cover}}'
+        alt='cover news'
+      />
+      <p class='card-text mt-3'>{{news.description}}</p>
+      <a href='http://localhost:3000/news'>
+        <button type='button' class='btn btn-dark mb-2'>
+          К новостям
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class='card mt-3'>
+    {{>form-create-comment}}
+    {{#if comments}}
+    <div class="card-body text-start">
+      <h5 class="text-uppercase">Комментарии:</h5>
+      <div class="card text-left mt-3">
+        <div class="card-body">
+        {{#each comments}}
+          <div class="d-flex flex-row mb-2">
+            <img src="http://localhost:3000{{this.avatar}}" class="rounded-circle me-2" alt="avatar"  style="height: 50px; width: 50px;">
+            <p class="my-auto">{{this.message}}</p>
+          </div>
+          <div style='max-width: 320px;'>
+            <h6 class='text-uppercase mt-4'>Ответить на комментарий:</h6>
+            <div
+              class='card-body'
+              style='display: flex;
+              flex-direction: column;
+              align-items: flex-start;'
+            >
+              <label for='avatar' class='form-label mb-1 me-2'>Выберите аватар:</label>
+              <input class='form-control' type='file' id="avatarReply{{this.id}}" />
+              <div class='mb-2 mt-2'>
+                <textarea
+                  class='form-control text-left'
+                  id='userCommentReply{{this.id}}'
+                  rows='4'
+                  cols='50'
+                  placeholder='Ответить на комментарий'
+                ></textarea>
+              </div>
+              <button id="reply{{this.id}}" class='btn btn-outline-dark mb-3'>Ответить</button>
+            </div>
+            {{#if this.reply}}
+              <h6 class="text-uppercase">Ответы:</h6>
+              {{#each this.reply}}
+              <div class="d-flex flex-row mb-2"">
+                <img src="http://localhost:3000{{this.avatarPath}}" class="rounded-circle me-2" alt="avatar"  style="height: 50px; width: 50px;>
+                <p class="my-auto">{{this.comment}}</p>
+              </div>
+              {{/each}}
+            {{/if}}
+           </div>
+          <hr>
+        {{/each}}
+        </div>
+      </div>
+    {{else}}
+    <h5 class="text-secondary">Для этой новости комментариев нет</h>
+    {{/if}}
+    <script>
+      const createComment = () => {
+        const avatar = document.getElementById("avatar");
+        const comment = document.getElementById("userComment");
+        if (comment.value !== "" && avatar.value !== "") {
+          const formdata = new FormData();
+          formdata.append("message", comment.value);
+          formdata.append("avatar", avatar.files[0], "http://localhost:3000/comments-static/" + avatar.value);
+           formdata.append("authorId", 1);
+          const requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+          };
+          const url = "http://localhost:3000/news-comments/create/?idNews={{this.news.id}}" 
+          fetch(url, requestOptions)
+        } else {
+          alert("В форме создания Комментария все поля обязательны для заполнения!")
+        }
+      }
+      document.getElementById("btnCreateComment").addEventListener("click", createComment);
+    </script>
+    </div>
+  </div>
+{{else}}
+  <h1 class='text-center'>Новость не найдена</h1>
+  <a href='http://localhost:3000/news'>
+    <button type='button' class='btn btn-dark mt-3'>
+      К новостям
+    </button>
+  </a>
+{{/if}}

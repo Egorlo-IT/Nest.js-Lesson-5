@@ -1,0 +1,25 @@
+<div style='max-width: 320px;'>
+  <h5 class='text-uppercase mt-4'>Добавить комментарий:</h5>
+  <div
+    class='card-body'
+    style='display: flex;
+    flex-direction: column;
+    align-items: flex-start;'
+  >
+    <label for='avatar' class='form-label mb-1 me-2'>Выберите аватар:</label>
+    <input class='form-control' type='file' id='avatar' />
+    <div class='mb-2 mt-2'>
+      <textarea
+        class='form-control text-left'
+        id='userComment'
+        rows='4'
+        cols='50'
+        placeholder='Введите текст комментария'
+      ></textarea>
+    </div>
+    <button
+      id='btnCreateComment'
+      class='btn btn-outline-dark mb-3'
+    >Добавить</button>
+  </div>
+</div>

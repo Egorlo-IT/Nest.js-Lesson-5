@@ -1,0 +1,29 @@
+<table>
+  <tr>
+    <td>Категория</td>
+    <td>{{category.name}}</td>
+  </tr>
+  <tr>
+    <td>Название</td>
+    <td>{{title}}</td>
+  </tr>
+  <tr>
+    <td>Описание</td>
+    <td>{{description}}</td>
+  </tr>
+  <tr>
+    <td>Автор</td><td>{{user.firstName}} {{user.lastName}}</td>
+  </tr>
+  <tr>
+    <td>Дата создания</td>
+    <td>{{createdAt}}</td>
+  </tr>
+  <tr>
+    <td>Ссылка на новость</td>
+    <td>
+      <a href='http://localhost:3000/news/{{id}}/detail'>
+        http://localhost:3000/news/{{id}}/detail
+      </a>
+    </td>
+  </tr>
+</table>
