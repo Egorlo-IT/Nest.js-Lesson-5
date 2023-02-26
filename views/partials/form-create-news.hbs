@@ -1,0 +1,48 @@
+<div class='card text-center mt-3'>
+  <h3 class='text-uppercase mt-4'>Создайте свою новость</h3>
+  <div class='card-body mx-auto'>
+    <div class='input-group mb-2 align-items-center'>
+      <label for='cover' class='form-label mb-0 me-2'>Изображение анонса:</label>
+      <input class='form-control' type='file' id='cover' />
+    </div>
+    <div class='mb-2'>
+      <input
+        type='text'
+        class='form-control'
+        id='title'
+        name='title'
+        aria-describedby='title'
+        placeholder='Введите название новости'
+      />
+    </div>
+    <div class='mb-2'>
+      <textarea
+        class='form-control text-left'
+        id='description'
+        rows='4'
+        cols='50'
+        name='description'
+        placeholder='Введите текст новости'
+      ></textarea>
+    </div>
+    <button id='btnCreateNews' class='btn btn-dark mb-3'>
+      Создать новость
+    </button>
+  </div>
+  <script>
+    const createNews = () => { const cover = document.getElementById("cover");
+    const title = document.getElementById("title"); const description =
+    document.getElementById("description"); if (cover.value !== "" &&
+    title.value !== "" && description.value !== "") { const formdata = new
+    FormData(); formdata.append("title", title.value);
+    formdata.append("description", description.value);
+    formdata.append("authorId", 1);formdata.append("categoryId", 1);
+    formdata.append("cover", cover.files[0],
+    "http://localhost:3000/news-static/" + cover.value); const requestOptions =
+    { method: 'POST', body: formdata, redirect: 'follow' }; const url =
+    "http://localhost:3000/news/create"; fetch(url, requestOptions) } else {
+    alert("В форме создания Новости все поля обязательны для заполнения!") } };
+    document.getElementById("btnCreateNews").addEventListener("click",
+    createNews);
+  </script>
+</div>

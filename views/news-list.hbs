@@ -1,0 +1,31 @@
+{{#if news}}
+<h1 class="text-uppercase mb-5">Новости</h1>
+  <div class='row'>
+    {{#each news}}
+      <div class="col-lg-6 mb-3">
+        <div class="card">
+          <div class="card-body align-items-left">
+            <h5 class="card-title text-uppercase">{{this.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">  
+              Автор: {{this.user.firstName}} {{this.user.lastName}}
+            </h6>
+            <h6 class="card-subtitle mb-2 text-muted">
+              Дата создания: {{dateLocal this.createdAt}} 
+            </h6>
+            <img src="http://localhost:3000{{this.cover}}" class="img-fluid rounded m-2" style="max-height:250px" alt="cover news">
+            <p class="card-text">{{this.description}}</p>
+            <a href="http://localhost:3000/news/{{this.id}}/detail">
+              <button type="button" class="btn btn-dark mb-4">
+                Читать далее
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  {{>form-create-news}}
+{{else}}
+  <h1 class="text-center">Список новостей пуст!</h1>
+  {{>form-create-news}}
+{{/if}}
